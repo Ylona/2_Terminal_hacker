@@ -5,6 +5,7 @@ using UnityEngine;
 public class Hacker : MonoBehaviour
 {
     int level;
+    string[] password = { "first", "second" };
     Screen currentScreen;
     enum Screen { MainMenu, Password, Win };
     // Start is called before the first frame update
@@ -34,6 +35,10 @@ public class Hacker : MonoBehaviour
         } else if (currentScreen == Screen.MainMenu)
         {
             RunMainManu(input);
+        } else if (currentScreen == Screen.Password)
+        {
+            Terminal.print("input" + input);
+            RunPasswordGuess(input);
         }
     }
 
@@ -48,6 +53,35 @@ public class Hacker : MonoBehaviour
         {
             Terminal.WriteLine("Please choose a valid level!");
         }
+    }
+
+    void RunPasswordGuess(string input)
+    {
+        Terminal.print("testGuess");
+
+        if (input.ToLower() == password[level - 1])
+        {
+            Terminal.print("testWin");
+            RunWin();
+        } else
+        {
+            RunIncorrect(input);
+        }
+    }
+
+    void RunWin()
+    {
+        currentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        Terminal.WriteLine("congratulations. The password " + password[level - 1] + " was Right!" );
+        Terminal.WriteLine("Type menu to return to the menu.");
+    }
+
+    void RunIncorrect(string input)
+    {
+        Terminal.WriteLine(input + " is incorrect!");
+        Terminal.WriteLine("Please enter your password: ");
+
     }
 
 
