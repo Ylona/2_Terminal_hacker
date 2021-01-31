@@ -46,7 +46,7 @@ public class Hacker : MonoBehaviour
         if (input == "1" || input == "2")
         {
             level = int.Parse(input);
-            StartGame();
+            AskForPassword();
         }
         else
         {
@@ -61,7 +61,7 @@ public class Hacker : MonoBehaviour
             RunWin();
         } else
         {
-            RunIncorrect(input);
+            AskForPassword();
         }
     }
 
@@ -79,7 +79,7 @@ public class Hacker : MonoBehaviour
         switch (level)
         {
             case 1:
-                Terminal.WriteLine("Have a book");
+                Terminal.WriteLine("Have a book: ");
                 Terminal.WriteLine(@" 
       ______ ______
     _/      Y      \_
@@ -90,7 +90,7 @@ public class Hacker : MonoBehaviour
                 ");
                 break;
             case 2:
-                Terminal.WriteLine("Have a key");
+                Terminal.WriteLine("Have a key: ");
                 Terminal.WriteLine(@" 
   ooo,    .---.
  o`  o   /    |\________________
@@ -103,20 +103,12 @@ o`   'oooo()  | ________   _   _)
         }   
     }
 
-    void RunIncorrect(string input)
-    {
-        Terminal.WriteLine("Wrong password ");
 
-    }
-
-
-    void StartGame()
+    void AskForPassword()
     {
         currentScreen = Screen.Password;
         password = passwordArray[level - 1, Random.Range(0, passwordArray.GetLength(level - 1))];
-        Terminal.ClearScreen();
-        Terminal.WriteLine("You have chosen level " + level);
-        Terminal.WriteLine("Please enter your password: ");
+        Terminal.WriteLine("Enter your password:, hint: " + password.Anagram());
     }
 
 }
