@@ -2,12 +2,20 @@
 
 public class Hacker : MonoBehaviour
 {
+    // Game state
     int level;
-    string[,] passwordArray = new string[,] { { "books", "password", "borrow" }, { "prisoner", "handcuuffs", "holster"} };
     string password;
-
     Screen currentScreen;
+
+    // Game confugation data
+    const string menuHint = "Type menu to return to the menu.";
+    string[,] passwordArray = new string[3,3] {
+        { "books", "password", "borrow" },
+        { "prisoner", "handcuuffs", "holster"},
+        { "starfield", "telescope", "environment"}
+    };
     enum Screen { MainMenu, Password, Win };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +31,7 @@ public class Hacker : MonoBehaviour
         Terminal.WriteLine("");
         Terminal.WriteLine("Press 1 for the local library");
         Terminal.WriteLine("Press 2 for the police station");
+        Terminal.WriteLine("Press 3 for NASA");
         Terminal.WriteLine("");
         Terminal.WriteLine("Enter your selection: ");
     }
@@ -43,7 +52,7 @@ public class Hacker : MonoBehaviour
 
     void RunMainManu(string input)
     {
-        if (input == "1" || input == "2")
+        if (input == "1" || input == "2" || input == "3")
         {
             level = int.Parse(input);
             AskForPassword();
@@ -71,7 +80,7 @@ public class Hacker : MonoBehaviour
         Terminal.ClearScreen();
         ShowLevelReward();
 
-        Terminal.WriteLine("Type menu to return to the menu.");
+        Terminal.WriteLine(menuHint);
     }
 
      void ShowLevelReward()
@@ -100,6 +109,16 @@ o`   'oooo()  | ________   _   _)
 
                 ");
                 break;
+            case 3:
+                Terminal.WriteLine(@" 
+ _ __   __ _ ___  __ _ 
+| '_ \ / _` / __|/ _` |
+| | | | (_| \__ \ (_| |
+|_| |_|\__,_|___/\__,_|
+                ");
+                Terminal.WriteLine("Welcome to NASA's internal system! ");
+
+                break;
         }   
     }
 
@@ -107,8 +126,10 @@ o`   'oooo()  | ________   _   _)
     void AskForPassword()
     {
         currentScreen = Screen.Password;
-        password = passwordArray[level - 1, Random.Range(0, passwordArray.GetLength(level - 1))];
+        password = passwordArray[level - 1, Random.Range(0, passwordArray.GetLength(1))];
+        Terminal.ClearScreen();
         Terminal.WriteLine("Enter your password:, hint: " + password.Anagram());
+        Terminal.WriteLine(menuHint);
     }
 
 }
