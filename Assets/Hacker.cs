@@ -4,7 +4,7 @@ public class Hacker : MonoBehaviour
 {
     int level;
     string[,] passwordArray = new string[,] { { "books", "password", "borrow" }, { "prisoner", "handcuuffs", "holster"} };
-    int passwordNr;
+    string password;
 
     Screen currentScreen;
     enum Screen { MainMenu, Password, Win };
@@ -56,7 +56,7 @@ public class Hacker : MonoBehaviour
 
     void RunPasswordGuess(string input)
     {
-        if (input.ToLower() == passwordArray[level - 1, Random.Range(0, passwordArray.GetLength(level - 1))])
+        if (input.ToLower() == password)
         {
             RunWin();
         } else
@@ -68,9 +68,39 @@ public class Hacker : MonoBehaviour
     void RunWin()
     {
         currentScreen = Screen.Win;
-        Terminal.WriteLine("Congratulations!");
+        Terminal.ClearScreen();
+        ShowLevelReward();
 
         Terminal.WriteLine("Type menu to return to the menu.");
+    }
+
+     void ShowLevelReward()
+    {
+        switch (level)
+        {
+            case 1:
+                Terminal.WriteLine("Have a book");
+                Terminal.WriteLine(@" 
+      ______ ______
+    _/      Y      \_
+   // ~~ ~~ | ~~ ~  \\
+  // ~ ~ ~~ | ~~~ ~~ \\     
+ //________.|.________\\    
+`----------`-'----------'
+                ");
+                break;
+            case 2:
+                Terminal.WriteLine("Have a key");
+                Terminal.WriteLine(@" 
+  ooo,    .---.
+ o`  o   /    |\________________
+o`   'oooo()  | ________   _   _)
+`oo   o` \    |/        | | | |
+  `ooo'   `---'         '-' |_|
+
+                ");
+                break;
+        }   
     }
 
     void RunIncorrect(string input)
@@ -83,6 +113,7 @@ public class Hacker : MonoBehaviour
     void StartGame()
     {
         currentScreen = Screen.Password;
+        password = passwordArray[level - 1, Random.Range(0, passwordArray.GetLength(level - 1))];
         Terminal.ClearScreen();
         Terminal.WriteLine("You have chosen level " + level);
         Terminal.WriteLine("Please enter your password: ");
