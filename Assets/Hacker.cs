@@ -6,6 +6,8 @@ public class Hacker : MonoBehaviour
 {
     int level;
     string[] password = { "first", "second" };
+    string[,] passwordArray = new string[2,3] { { "books", "", "" }, { "", "", " " } };
+
     Screen currentScreen;
     enum Screen { MainMenu, Password, Win };
     // Start is called before the first frame update
@@ -37,7 +39,6 @@ public class Hacker : MonoBehaviour
             RunMainManu(input);
         } else if (currentScreen == Screen.Password)
         {
-            Terminal.print("input" + input);
             RunPasswordGuess(input);
         }
     }
@@ -57,11 +58,9 @@ public class Hacker : MonoBehaviour
 
     void RunPasswordGuess(string input)
     {
-        Terminal.print("testGuess");
 
-        if (input.ToLower() == password[level - 1])
+        if (input.ToLower() == passwordArray[level - 1, 0])
         {
-            Terminal.print("testWin");
             RunWin();
         } else
         {
@@ -72,15 +71,14 @@ public class Hacker : MonoBehaviour
     void RunWin()
     {
         currentScreen = Screen.Win;
-        Terminal.ClearScreen();
-        Terminal.WriteLine("congratulations. The password " + password[level - 1] + " was Right!" );
+        Terminal.WriteLine("Congratulations!");
+
         Terminal.WriteLine("Type menu to return to the menu.");
     }
 
     void RunIncorrect(string input)
     {
-        Terminal.WriteLine(input + " is incorrect!");
-        Terminal.WriteLine("Please enter your password: ");
+        Terminal.WriteLine("Wrong password ");
 
     }
 
