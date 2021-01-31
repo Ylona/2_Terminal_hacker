@@ -5,8 +5,7 @@ using UnityEngine;
 public class Hacker : MonoBehaviour
 {
     int level;
-    string[] password = { "first", "second" };
-    string[,] passwordArray = new string[2,3] { { "books", "", "" }, { "", "", " " } };
+    string[,] passwordArray = new string[2,3] { { "books", "password", "borrow" }, { "prisoner", "handcuuffs", "holster"} };
 
     Screen currentScreen;
     enum Screen { MainMenu, Password, Win };
@@ -86,6 +85,7 @@ public class Hacker : MonoBehaviour
     void StartGame()
     {
         currentScreen = Screen.Password;
+        Terminal.ClearScreen();
         Terminal.WriteLine("You have chosen level " + level);
         Terminal.WriteLine("Please enter your password: ");
     }
