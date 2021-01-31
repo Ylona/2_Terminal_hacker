@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
     int level;
-    string[,] passwordArray = new string[2,3] { { "books", "password", "borrow" }, { "prisoner", "handcuuffs", "holster"} };
+    string[,] passwordArray = new string[,] { { "books", "password", "borrow" }, { "prisoner", "handcuuffs", "holster"} };
+    int passwordNr;
 
     Screen currentScreen;
     enum Screen { MainMenu, Password, Win };
@@ -57,8 +56,7 @@ public class Hacker : MonoBehaviour
 
     void RunPasswordGuess(string input)
     {
-
-        if (input.ToLower() == passwordArray[level - 1, 0])
+        if (input.ToLower() == passwordArray[level - 1, Random.Range(0, passwordArray.GetLength(level - 1))])
         {
             RunWin();
         } else
